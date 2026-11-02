@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Statistical Methods Mind Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Interactive mind map of 14 statistical methods: purpose, when to use, key points, assumptions, SPSS steps, examples and research questions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: the radial hub map fills the stage; picking a method zooms into its own branch map, with a reading panel beside it. */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#1A1D23; --muted:#596171; --line:#D8DDE4; --grid:#E2E6EC; --focus:#2463EB;
+  --hub:#1A1D23; --on-hub:#FFFFFF; --on-strong:#FFFFFF;
+  --note:#FFF09A; --on-note:#3A3205;
+  --related:#5B3FC4; --related-tint:#ECE8FB; --related-ink:#33236F;
+  --adjusted:#6B5570; --adjusted-tint:#F1EAF2; --adjusted-ink:#3F3043;
+  --unrelated:#2E7D37; --unrelated-tint:#E1F1E0; --unrelated-ink:#1B4A21;
+  --predict:#2F6E70; --predict-tint:#DCEEEE; --predict-ink:#1A4345;
+  --assoc:#B83B37; --assoc-tint:#FBE4E3; --assoc-ink:#6E1F1C;
+  --measure:#2B6CB0; --measure-tint:#DFECF9; --measure-ink:#173F69;
+  --shadow:0 1px 2px rgba(20,24,32,.07),0 4px 12px rgba(20,24,32,.07);
+  --font-display:"Barlow Condensed","Roboto Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --font-body:"Source Sans 3","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111317; --surface:#1A1D23; --ink:#E7E9EE; --muted:#9CA3B1; --line:#2F343D; --grid:#262A31; --focus:#7AA7FF;
+    --hub:#E7E9EE; --on-hub:#111317; --on-strong:#111317;
+    --note:#4D4512; --on-note:#FFF3B0;
+    --related:#A792F5; --related-tint:#26213F; --related-ink:#DCD3FF;
+    --adjusted:#C1A9C6; --adjusted-tint:#2D2630; --adjusted-ink:#EADDED;
+    --unrelated:#74C47A; --unrelated-tint:#1B2E1D; --unrelated-ink:#C6EBC8;
+    --predict:#6FBFC1; --predict-tint:#18302F; --predict-ink:#C5E9EA;
+    --assoc:#F08A85; --assoc-tint:#3A1F1E; --assoc-ink:#FFD5D2;
+    --measure:#7CB4EE; --measure-tint:#182A3D; --measure-ink:#CFE4FA;
+    --shadow:0 1px 2px rgba(0,0,0,.45),0 6px 16px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111317; --surface:#1A1D23; --ink:#E7E9EE; --muted:#9CA3B1; --line:#2F343D; --grid:#262A31; --focus:#7AA7FF;
+  --hub:#E7E9EE; --on-hub:#111317; --on-strong:#111317;
+  --note:#4D4512; --on-note:#FFF3B0;
+  --related:#A792F5; --related-tint:#26213F; --related-ink:#DCD3FF;
+  --adjusted:#C1A9C6; --adjusted-tint:#2D2630; --adjusted-ink:#EADDED;
+  --unrelated:#74C47A; --unrelated-tint:#1B2E1D; --unrelated-ink:#C6EBC8;
+  --predict:#6FBFC1; --predict-tint:#18302F; --predict-ink:#C5E9EA;
+  --assoc:#F08A85; --assoc-tint:#3A1F1E; --assoc-ink:#FFD5D2;
+  --measure:#7CB4EE; --measure-tint:#182A3D; --measure-ink:#CFE4FA;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 6px 16px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+.f-related{--c:var(--related);--c-tint:var(--related-tint);--c-ink:var(--related-ink)}
+.f-adjusted{--c:var(--adjusted);--c-tint:var(--adjusted-tint);--c-ink:var(--adjusted-ink)}
+.f-unrelated{--c:var(--unrelated);--c-tint:var(--unrelated-tint);--c-ink:var(--unrelated-ink)}
+.f-predict{--c:var(--predict);--c-tint:var(--predict-tint);--c-ink:var(--predict-ink)}
+.f-assoc{--c:var(--assoc);--c-tint:var(--assoc-tint);--c-ink:var(--assoc-ink)}
+.f-measure{--c:var(--measure);--c-tint:var(--measure-tint);--c-ink:var(--measure-ink)}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.5}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
+h2:focus{outline:none}
+
+.app{max-width:1240px;margin:0 auto;padding-block:22px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:768px){.app{padding-left:max(28px,env(safe-area-inset-left,0px));padding-right:max(28px,env(safe-area-inset-right,0px))}}
+
+/* Header */
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 24px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--line)}
+.titles{min-width:0}
+.eyebrow{margin:0;font-size:12.5px;font-weight:700;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{margin:6px 0 0;font:700 clamp(34px,5vw,48px)/1 var(--font-display);letter-spacing:.005em;text-wrap:balance}
+.sub{margin:8px 0 0;color:var(--muted);font-size:15.5px}
+
+/* Legend */
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:14px}
+.legend .lbl{font-size:14px;color:var(--muted);margin-right:2px}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:5px 12px 5px 9px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px;font-weight:600;cursor:pointer}
+.chip .dot,.pill .dot,.t-label .dot{width:10px;height:10px;border-radius:3px;background:var(--c);flex:none}
+.chip .n{color:var(--muted);font-variant-numeric:tabular-nums}
+.chip:hover{border-color:var(--c)}
+.chip[aria-pressed="true"]{background:var(--c-tint);border-color:var(--c);color:var(--c-ink)}
+.chip[aria-pressed="true"] .n{color:inherit}
+.chip.clear{color:var(--muted);font-weight:600}
+
+/* Crumbs */
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-bottom:14px}
+.trail{font-size:15px;color:var(--muted)}
+.trail b{color:var(--ink);font-weight:700}
+
+/* Map + panel */
+.mapwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
+.mapwrap.split{grid-template-columns:minmax(0,1fr) 400px}
+.stage{position:relative;width:100%;min-width:0;border-radius:18px;border:1px solid var(--line);background-color:var(--surface);background-image:radial-gradient(circle,var(--grid) 1.1px,transparent 1.6px);background-size:22px 22px;overflow:hidden}
+.stage svg{position:absolute;left:0;top:0;pointer-events:none}
+.node{position:absolute;left:0;top:0;display:flex;align-items:center;justify-content:center;width:var(--nw,150px);min-height:46px;padding:8px 10px;border-radius:12px;border:1.5px solid var(--c);background:var(--c-tint);color:var(--c-ink);font-size:var(--nfs,14.5px);font-weight:600;line-height:1.2;text-align:center;text-wrap:balance;cursor:pointer;box-shadow:var(--shadow);transition:translate .6s var(--ease),scale .6s var(--ease),opacity .35s ease,background-color .15s,color .15s}
+.node:hover,.node:focus-visible,.node[aria-current="true"]{background:var(--c);color:var(--on-strong)}
+.node.dim{opacity:.2}
+.center{position:absolute;left:0;top:0;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:50%;padding:14px 24px;font:700 25px/1.02 var(--font-display);text-wrap:balance}
+.center.hub{width:210px;min-height:104px;background:var(--hub);color:var(--on-hub);font-size:27px}
+.center.mc{width:var(--cw,230px);min-height:120px;background:var(--c-tint);color:var(--c-ink);border:2px solid var(--c)}
+.center.pop{animation:pop .45s var(--ease)}
+@keyframes pop{from{opacity:0;scale:.8}to{opacity:1;scale:1}}
+.ln{stroke:var(--c);stroke-width:1.7;stroke-linecap:round;fill:none;opacity:.85;transition:stroke-dashoffset .6s var(--ease),opacity .25s}
+.ah{fill:var(--c);transition:opacity .3s}
+.ln.dim,.ah.dim{opacity:.13}
+
+/* Hub preview */
+.preview{margin-top:14px;padding:14px 18px;border-radius:14px;border:1px solid var(--line);background:var(--surface);min-height:84px;display:grid;gap:4px}
+.pv-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.pv-name{margin:0;font:700 23px/1.1 var(--font-display)}
+.pv-text{margin:0;color:var(--muted);max-width:78ch}
+.pv-go{justify-self:start;margin-top:4px}
+
+/* Panel */
+.panel{min-width:0;padding:22px 22px 18px;border-radius:18px;border:1px solid var(--line);background:var(--surface)}
+.p-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 8px;border-radius:999px;background:var(--c-tint);color:var(--c-ink);font-size:13px;font-weight:700}
+.count{font-size:13.5px;color:var(--muted)}
+.panel h2{margin:8px 0 14px;font:700 34px/1.02 var(--font-display);text-wrap:balance}
+.sec-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;margin-bottom:10px}
+.toggle{display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--muted);cursor:pointer;user-select:none}
+.toggle input{width:16px;height:16px;margin:0;accent-color:var(--c)}
+.sec h3{margin:0 0 10px;font:700 24px/1.1 var(--font-display)}
+.sec ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.sec li{position:relative;padding-left:20px}
+.sec li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--c)}
+.sec + .sec{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.sec.flash h3{color:var(--c-ink)}
+.sec-nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:14.5px;font-weight:600;line-height:1.25;text-align:left;cursor:pointer}
+.btn:hover{border-color:var(--c,var(--ink));background:var(--c-tint,var(--surface));color:var(--c-ink,var(--ink))}
+.btn.next{margin-left:auto;text-align:right}
+.menu-path{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px 5px;vertical-align:baseline}
+.mi{padding:0 7px;border-radius:6px;border:1px solid var(--line);background:var(--bg);font-size:14.5px;white-space:nowrap}
+.sep{color:var(--muted)}
+.nw{white-space:nowrap}
+.mlink{padding:0;border:0;background:none;text-align:left;color:var(--c-ink);font-weight:700;text-decoration:underline;text-decoration-color:var(--c);text-decoration-thickness:2px;text-underline-offset:3px;cursor:pointer}
+.mlink:hover{text-decoration-thickness:3px}
+.related{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.rel-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.rel{display:inline-flex;flex-direction:column;align-items:flex-start;gap:1px;padding:7px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);text-align:left;cursor:pointer}
+.rel b{color:var(--c-ink);font-size:15px}
+.rel span{color:var(--muted);font-size:13px}
+.rel:hover{border-color:var(--c);background:var(--c-tint)}
+.mnav{display:flex;justify-content:space-between;gap:12px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.mnav button{display:flex;flex-direction:column;gap:2px;max-width:48%;padding:4px 0;border:0;background:none;color:var(--ink);font-size:15px;font-weight:600;text-align:left;cursor:pointer}
+.mnav button.r{text-align:right;align-items:flex-end;margin-left:auto}
+.mnav small{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.mnav button:hover span{text-decoration:underline;text-underline-offset:3px}
+
+/* Narrow tree */
+.tree{padding:2px 0 6px}
+.t-root{display:inline-flex;align-items:center;padding:12px 22px;border-radius:999px;background:var(--hub);color:var(--on-hub);font:700 23px/1 var(--font-display)}
+.t-trunk{display:grid;gap:16px;margin-left:26px;padding-top:14px;border-left:2px solid var(--line)}
+.t-group{position:relative;padding-left:20px}
+.t-group::before{content:"";position:absolute;left:0;top:10px;width:14px;border-top:2px solid var(--line)}
+.t-label{display:flex;align-items:center;gap:8px;margin:0 0 8px;color:var(--c-ink);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.t-items,.acc-tree{display:grid;gap:8px;margin-left:5px;padding-left:16px;border-left:2px solid var(--c)}
+.t-node,.acc-btn{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--c);background:var(--c-tint);color:var(--c-ink);font-size:15.5px;font-weight:600;text-align:left;cursor:pointer}
+.t-node::before,.acc::before{content:"";position:absolute;left:-18px;top:50%;width:16px;border-top:2px solid var(--c)}
+.acc{position:relative}
+.acc::before{top:23px}
+.t-node:hover,.acc-btn:hover,.acc.open .acc-btn{background:var(--c);color:var(--on-strong)}
+.t-node.dim{opacity:.3}
+.t-meta{font-size:13px;opacity:.8;white-space:nowrap}
+.chev::after{content:"+";font-size:18px;line-height:1}
+.acc.open .chev::after{content:"\2013"}
+.acc-body{padding:12px 2px 6px}
+
+.outline{display:none}
+@media (prefers-reduced-motion: reduce){
+  .node,.ln,.ah{transition:none!important}
+  .center.pop{animation:none}
+}
+@media print{
+  .app{display:none}
+  .outline{display:block;color:#000;font-size:11pt}
+  .outline h1{font-size:22pt;margin:0 0 6pt}
+  .outline h2{font-size:15pt;margin:16pt 0 2pt;break-after:avoid}
+  .outline h3{font-size:11.5pt;margin:8pt 0 2pt;break-after:avoid}
+  .outline .o-syn{margin:0 0 4pt;font-style:italic}
+  .outline ul{margin:0 0 4pt 16pt;padding:0}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="titles">
+      <p class="eyebrow">Interactive mind map</p>
+      <h1>Statistical Methods</h1>
+      <p class="sub" id="sub">Click a method box, then click a section box to read it.</p>
+    </div>
+  </header>
+
+  <section id="view-map" aria-label="Mind map">
+    <div class="crumbs" id="crumbs" hidden></div>
+    <div class="legend" id="legend"></div>
+    <div class="mapwrap" id="mapwrap">
+      <div class="stage" id="stage">
+        <svg id="lines" aria-hidden="true"></svg>
+        <div id="nodes"></div>
+      </div>
+      <div class="tree" id="tree" hidden></div>
+      <aside class="panel" id="panel" hidden aria-live="polite"></aside>
+    </div>
+    <div class="preview" id="preview" aria-live="polite"></div>
+  </section>
+</div>
+<div class="outline" id="outline"></div>
+
+<script type="application/json" id="mm-data">
+{
+"families":[
+  {"id":"related","name":"Related groups","desc":"The same participants are measured more than once."},
+  {"id":"adjusted","name":"Covariates & multiple outcomes","desc":"Group comparisons that adjust for a covariate or test 2 or more dependent variables."},
+  {"id":"unrelated","name":"Unrelated groups","desc":"Separate groups compared across two independent variables."},
+  {"id":"predict","name":"Prediction","desc":"Regression models that predict an outcome from one or more predictors."},
+  {"id":"assoc","name":"Association","desc":"Relationships between two categorical variables."},
+  {"id":"measure","name":"Measurement","desc":"Reliability and structure of survey items."}
+],
+"methods":[
+  {"id":"rm-anova","name":"Repeated Measures ANOVA","label":"Repeated Measures ANOVA","fam":"related",
+   "related":[["friedman","Nonparametric version"]],
+   "sections":[
+    {"t":"Purpose","b":["Tests whether the mean of one continuous outcome changes across three or more repeated measurements from the same participants."]},
+    {"t":"When to Use","b":["The same students are measured repeatedly, so the observations are related rather than independent."]},
+    {"t":"Key Points","b":["One within-subject factor (time) plus one continuous dependent variable.","Look first at the overall within-subjects time effect; if significant, use pairwise comparisons to determine which time points differ."]},
+    {"t":"Assumptions","b":["Sphericity matters in a full analysis; use a correction such as Greenhouse-Geisser when needed."]},
+    {"t":"SPSS","b":["Analyze → General Linear Model → Repeated Measures.","Key output: Descriptive Statistics, Tests of Within-Subjects Effects, Pairwise Comparisons, Marginal Means plot."]},
+    {"t":"Example","b":["Student test scores at Pre, Q2, Q3, and Post."]},
+    {"t":"Research Question","b":["Is there a difference in test scores over 4 time intervals?"]}
+   ]},
+  {"id":"friedman","name":"Friedman’s Test","label":"Friedman’s Test","fam":"related",
+   "related":[["rm-anova","Parametric version"]],
+   "sections":[
+    {"t":"Purpose","b":["Nonparametric test for differences across three or more related measurements."]},
+    {"t":"When to Use","b":["Use when repeated measurements are ordinal, or when the parametric repeated-measures approach is not appropriate."]},
+    {"t":"Key Points","b":["Same participants measured repeatedly; outcome is at least ordinal.","Friedman works with ranks rather than comparing means the way RM ANOVA does.","A significant result says at least one time point differs; follow-up comparisons are needed to locate differences."]},
+    {"t":"SPSS","b":["Analyze → Nonparametric Tests → Related Samples.","Key output: descriptive information and Test Statistics."]},
+    {"t":"Example","b":["Teacher confidence at Pre, Mid, and Post."]},
+    {"t":"Research Question","b":["Is there a difference in teachers’ perceived confidence (ordinal scores) in teaching over 3 time intervals?"]}
+   ]},
+  {"id":"ancova","name":"ANCOVA","label":"ANCOVA","fam":"adjusted",
+   "related":[["mancova","Same idea with 2+ outcomes"],["two-way-anova","Also GLM → Univariate in SPSS"]],
+   "sections":[
+    {"t":"Purpose","b":["Compares mean scores across categorical groups while statistically controlling for a continuous variable that may be related to the outcome."]},
+    {"t":"When to Use","b":["It separates the group comparison from variation associated with the covariate, allowing adjusted group means to be compared."]},
+    {"t":"Key Points","b":["Dependent variable = leadership knowledge/best-practices score; fixed factor = administrator group (curriculum directors, principals, superintendents); covariate = years of leadership experience.","The main group effect answers whether adjusted group means differ.","The covariate row tests whether the covariate is related to the outcome after group membership is included.","Pairwise comparisons identify which adjusted group means differ."]},
+    {"t":"Assumptions","b":["Check linearity and homogeneity of regression slopes in a full analysis."]},
+    {"t":"SPSS","b":["Analyze → General Linear Model → Univariate. Outcome in Dependent Variable, group in Fixed Factor(s), experience in Covariate(s).","Request Descriptive Statistics, effect size, Estimated Marginal Means/pairwise comparisons, and a profile plot."]},
+    {"t":"Example","b":["Compare administrator groups (curriculum directors, principals, superintendents) on leadership knowledge and best-practices scores, after adjusting for years of leadership experience."]},
+    {"t":"Research Question","b":["If curriculum directors, principals, and superintendents were compared at the same level of leadership experience, would their leadership knowledge and best-practices scores still be different?"]}
+   ]},
+  {"id":"manova","name":"MANOVA","label":"MANOVA","fam":"adjusted",
+   "related":[["mancova","MANOVA plus covariate(s)"]],
+   "sections":[
+    {"t":"Purpose","b":["Tests group differences on two or more continuous dependent variables simultaneously."]},
+    {"t":"When to Use","b":["Use when the outcomes are related and the research question concerns the combined multivariate outcome rather than running separate ANOVAs first."]},
+    {"t":"Key Points","b":["Categorical grouping independent variable plus two or more continuous dependent variables.","Start with the multivariate test. If the overall multivariate effect is significant, examine the follow-up Tests of Between-Subjects Effects and pairwise comparisons to see where differences occur."]},
+    {"t":"SPSS","b":["Analyze → General Linear Model → Multivariate.","Key output: Descriptive Statistics, Multivariate Tests, Tests of Between-Subjects Effects, Pairwise Comparisons."]},
+    {"t":"Example","b":["Independent variable = declared major (freshman STEM majors, History majors, Art majors); dependent variables = GPA and SAT scores."]},
+    {"t":"Research Question","b":["Is there a difference in GPA and SAT scores for freshmen STEM majors, History majors, and Art majors attending a state university?"]}
+   ]},
+  {"id":"mancova","name":"MANCOVA","label":"MANCOVA","fam":"adjusted",
+   "related":[["manova","Without covariates"],["ancova","One-outcome version"]],
+   "sections":[
+    {"t":"Purpose","b":["Extends MANOVA by adding one or more covariates."]},
+    {"t":"When to Use","b":["Use when comparing groups on multiple continuous outcomes while statistically controlling variables that may influence those outcomes."]},
+    {"t":"Key Points","b":["Categorical independent variable plus two or more continuous dependent variables plus continuous covariate(s).","Think “MANOVA plus a covariate.” Interpret the multivariate group effect after adjustment, then examine outcome-specific effects when appropriate."]},
+    {"t":"Assumptions","b":["Assumptions include those of MANOVA plus appropriate covariate relationships and homogeneity of regression slopes."]},
+    {"t":"SPSS","b":["Analyze → General Linear Model → Multivariate; place the control variable(s) in Covariate(s)."]}
+   ]},
+  {"id":"two-way-anova","name":"Two-Way ANOVA","label":"Two-Way ANOVA","fam":"unrelated",
+   "related":[["ancova","Also GLM → Univariate in SPSS"]],
+   "sections":[
+    {"t":"Purpose","b":["Tests the effects of two categorical independent variables on one continuous dependent variable."]},
+    {"t":"When to Use","b":["It answers three questions in one model: the main effect of Factor A, the main effect of Factor B, and whether the effect of one factor depends on the other (interaction)."]},
+    {"t":"Key Points","b":["Dependent variable = adults’ persuasive writing score (0–30); Factor 1 = education level; Factor 2 = writing method (pen or computer).","Check the interaction before interpreting main effects too simply.","A significant interaction means the relationship between one factor and the outcome changes across levels of the other factor."]},
+    {"t":"SPSS","b":["Analyze → General Linear Model → Univariate. Dependent variable in Dependent Variable; both categorical predictors in Fixed Factor(s).","Request Descriptive Statistics, effect sizes, Estimated Marginal Means, and a profile plot.","Key output: Tests of Between-Subjects Effects and Marginal Means plot."]},
+    {"t":"Example","b":["Compare persuasive-writing scores across education level and writing method, including their interaction."]},
+    {"t":"Research Question","b":["Is there a difference in adults’ persuasive writing scores between (1) education level and (2) method of writing (pen or computer)?"]}
+   ]},
+  {"id":"multiple-regression","name":"Multiple Regression","label":"Multiple Regression","fam":"predict",
+   "related":[["logistic-regression","Binary outcome"],["ordinal-regression","Ordered outcome"]],
+   "sections":[
+    {"t":"Purpose","b":["Predicts one continuous dependent variable from two or more predictors."]},
+    {"t":"When to Use","b":["Use when the goal is prediction/explanation of variation in a continuous outcome using several predictors simultaneously."]},
+    {"t":"Key Points","b":["R² = proportion of outcome variance explained by the predictor set.","The ANOVA table shows whether the regression model as a whole is significant.","The Coefficients table shows each predictor’s unique contribution while holding the others constant."]},
+    {"t":"Assumptions","b":["Check VIF/tolerance for multicollinearity among predictors."]},
+    {"t":"SPSS","b":["Analyze → Regression → Linear.","Key output: Model Summary, ANOVA, Coefficients."]},
+    {"t":"Example","b":["Dependent variable = 8th-grade writing score; predictors = six 7th-grade subject test scores (English, reading, science, history, mathematics, and art)."]},
+    {"t":"Research Question","b":["Do 7th-grade end-of-year test scores (English, reading, science, history, mathematics, and art) predict 8th-grade writing skill scores?"]}
+   ]},
+  {"id":"logistic-regression","name":"Logistic Regression","label":"Logistic Regression","fam":"predict",
+   "related":[["ordinal-regression","3+ ordered categories"],["multiple-regression","Continuous outcome"]],
+   "sections":[
+    {"t":"Purpose","b":["Predicts a binary outcome (two categories) using one or more predictors."]},
+    {"t":"When to Use","b":["Use when the dependent variable is yes/no, pass/fail, retained/not retained, etc."]},
+    {"t":"Key Points","b":["Interpret odds and odds ratios rather than a continuous predicted score.","Outcome has exactly two categories.","Exp(B) is the odds ratio."]},
+    {"t":"SPSS","b":["Analyze → Regression → Binary Logistic."]}
+   ]},
+  {"id":"ordinal-regression","name":"Ordinal Regression","label":"Ordinal Regression","fam":"predict",
+   "related":[["logistic-regression","Two categories"],["multiple-regression","Continuous outcome"]],
+   "sections":[
+    {"t":"Purpose","b":["Predicts an ordered categorical outcome with three or more ordered levels."]},
+    {"t":"When to Use","b":["Use when categories have a natural ranking but the spacing between categories should not be treated as equal."]},
+    {"t":"Key Points","b":["Examples of outcome form: low/medium/high; beginning/developing/proficient/advanced.","The outcome is ordered, not continuous."]},
+    {"t":"Assumptions","b":["A key model assumption is the proportional odds / parallel lines assumption."]},
+    {"t":"SPSS","b":["Analyze → Regression → Ordinal."]},
+    {"t":"Example","b":["Illustrative outcome forms given in the module: low/medium/high; beginning/developing/proficient/advanced."]}
+   ]},
+  {"id":"chi-square","name":"Chi-Square Test of Association","label":"Chi-Square Test","fam":"assoc",
+   "related":[["fishers-exact","Small expected counts (2×2)"]],
+   "sections":[
+    {"t":"Purpose","b":["Tests whether two categorical variables are associated."]},
+    {"t":"When to Use","b":["Use when both variables are categorical and the question asks about a relationship/association rather than a difference in means."]},
+    {"t":"Key Points","b":["Compares observed counts with counts expected if the variables were independent.","If p < .05, there is evidence of an association.","Cramer’s V/Phi describes the strength of the association."]},
+    {"t":"Assumptions","b":["Expected cell counts matter for the chi-square approximation to be valid."]},
+    {"t":"SPSS","b":["Analyze → Descriptive Statistics → Crosstabs. Statistics: Chi-square + Phi and Cramer’s V.","Cells: Observed, Expected, and useful row/column percentages."]},
+    {"t":"Example","b":["2 education categories × 3 performance categories."]},
+    {"t":"Research Question","b":["Is there a relationship between teachers’ level of education (4-year degree or graduate degree) and performance evaluation indicator (needs improvement, on-target, or exceeding)?"]}
+   ]},
+  {"id":"fishers-exact","name":"Fisher’s Exact Test","label":"Fisher’s Exact Test","fam":"assoc",
+   "related":[["chi-square","Larger expected counts"]],
+   "sections":[
+    {"t":"Purpose","b":["Exact test of association for categorical data, commonly used for a 2×2 table when sample/cell counts are small."]},
+    {"t":"When to Use","b":["Use when the chi-square approximation may be unreliable because expected frequencies are too small."]},
+    {"t":"Key Points","b":["The research question is still about association between categorical variables.","Interpret Fisher’s Exact significance for the exact 2×2 test."]},
+    {"t":"SPSS","b":["Analyze → Descriptive Statistics → Crosstabs. Request Chi-square; SPSS reports Fisher’s Exact for the 2×2 table.","Also request Phi/Cramer’s V and observed/expected counts."]},
+    {"t":"Example","b":["The performance variable is reduced to two categories, creating a 2×2 problem."]},
+    {"t":"Research Question","b":["Is there a relationship between teachers’ level of education (4-year degree or graduate degree) and performance evaluation indicator (needs improvement or on-target)?"]}
+   ]},
+  {"id":"cronbachs-alpha","name":"Cronbach’s Alpha","label":"Cronbach’s Alpha","fam":"measure",
+   "related":[["efa","Checks the item structure"]],
+   "sections":[
+    {"t":"Purpose","b":["Evaluates internal consistency: whether a set of survey items behaves as a coherent scale."]},
+    {"t":"When to Use","b":["Use when several items are intended to measure the same construct."]},
+    {"t":"Key Points","b":["Inspect overall alpha plus corrected item-total correlations and “alpha if item deleted.”"]},
+    {"t":"Assumptions","b":["Alpha is not proof that a scale is one-dimensional."]},
+    {"t":"SPSS","b":["Analyze → Scale → Reliability Analysis; Model = Alpha.","Request Item, Scale, and Scale if item deleted."]},
+    {"t":"Example","b":["Motivation items 1–8."]},
+    {"t":"Research Question","b":["Is there internal consistency/reliability for the survey items measuring teachers’ motivation?"]}
+   ]},
+  {"id":"efa","name":"Exploratory Factor Analysis (EFA)","label":"Exploratory Factor Analysis (EFA)","fam":"measure",
+   "related":[["cfa","Confirms a set structure"],["cronbachs-alpha","Checks reliability"]],
+   "sections":[
+    {"t":"Purpose","b":["Explores how many latent dimensions may underlie a set of observed items and which items cluster together."]},
+    {"t":"When to Use","b":["Use when the structure is being discovered/explored rather than strictly confirmed."]},
+    {"t":"Key Points","b":["Examine factor retention/variance and the rotated loading matrix.","Items should load strongly on the intended factor and avoid problematic cross-loadings."]},
+    {"t":"SPSS","b":["Analyze → Dimension Reduction → Factor.","Key output requested in the module: Total Variance Explained and Rotated Component Matrix."]},
+    {"t":"Example","b":["Interest items 1–8 expected to cluster together; Confidence items 1–6 expected to cluster together."]},
+    {"t":"Research Question","b":["Are we measuring two distinct ideas (interest and confidence)?"]}
+   ]},
+  {"id":"cfa","name":"Confirmatory Factor Analysis (CFA)","label":"Confirmatory Factor Analysis (CFA)","fam":"measure",
+   "related":[["efa","Explores the structure first"]],
+   "sections":[
+    {"t":"Purpose","b":["Tests whether observed data fit a factor structure specified in advance from theory or prior evidence."]},
+    {"t":"When to Use","b":["Use after there is a hypothesized measurement model and the goal is confirmation rather than discovery."]},
+    {"t":"Key Points","b":["EFA asks “What structure appears?” CFA asks “Does this specified structure fit?”","CFA is typically conducted in structural-equation-modeling software rather than the basic SPSS Factor dialog."]},
+    {"t":"SPSS","b":["Not run in the basic SPSS Factor dialog; typically requires structural-equation-modeling software."]},
+    {"t":"Example","b":["A later CFA could test a prespecified two-factor interest/confidence model, connecting back to the Module 7 EFA idea – though the Module 7 problem-data directions explicitly ask students to run Cronbach’s alpha and EFA instead."]}
+   ]}
+]
+}
+</script>
+
+<script>
+(function(){
+'use strict';
+var D = JSON.parse(document.getElementById('mm-data').textContent);
+var M = D.methods, FAMS = D.families;
+var byId = {}, famById = {};
+M.forEach(function(m,i){ m.idx = i; byId[m.id] = m; });
+FAMS.forEach(function(f){ famById[f.id] = f; });
+var TOTAL_SECTIONS = M.reduce(function(n,m){ return n + m.sections.length; }, 0);
+
+function $(s){ return document.querySelector(s); }
+var el = {
+  stage:$('#stage'), svg:$('#lines'), nodes:$('#nodes'), tree:$('#tree'), panel:$('#panel'),
+  wrap:$('#mapwrap'), crumbs:$('#crumbs'), legend:$('#legend'), preview:$('#preview'),
+  sub:$('#sub'), vmap:$('#view-map'), outline:$('#outline')
+};
+var SVGNS = 'http://www.w3.org/2000/svg';
+var reduceMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
+var state = {view:'map', method:null, sec:0, all:false, fam:null, hover:null};
+var stageItems = [], stageMode = null, lastWidth = 0;
+
+/* ---------- text helpers ---------- */
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+function fmtBullet(t){
+  var m = t.match(/^(Analyze(?: → [^.;→]+)+)[.;]\s*(.*)$/);
+  var out = '', rest = t;
+  if (m) {
+    out = '<span class="menu-path">' + m[1].split(' → ').map(function(p){ return '<span class="mi">' + esc(p) + '</span>'; }).join('<span class="sep" aria-hidden="true">›</span>') + '</span>';
+    rest = m[2];
+  }
+  var r = esc(rest).replace(/^(Key output(?: requested in the module)?:|Cells:|Statistics:)/, '<strong>$1</strong>');
+  return out + (out && r ? ' ' : '') + r;
+}
+function bulletsHTML(s){ return '<ul>' + s.b.map(function(b){ return '<li>' + fmtBullet(b) + '</li>'; }).join('') + '</ul>'; }
+
+/* ---------- routing ---------- */
+function hashFor(){
+  if (!state.method) return '';
+  var m = byId[state.method];
+  return state.sec > 0 ? m.id + '--' + slug(m.sections[state.sec].t) : m.id;
+}
+function readHash(){
+  var h = '';
+  try { h = decodeURIComponent((location.hash || '').replace(/^#/, '')); } catch (e) {}
+  var parts = h.split('--'), m = byId[parts[0]];
+  if (!m) return {view:'map', method:null, sec:0};
+  var si = 0;
+  if (parts[1]) { si = m.sections.findIndex(function(s){ return slug(s.t) === parts[1]; }); if (si < 0) si = 0; }
+  return {view:'map', method:m.id, sec:si};
+}
+function writeHash(replace){
+  var h = hashFor(), cur = (location.hash || '').replace(/^#/, '');
+  if (h === cur) return;
+  try {
+    if (replace && window.history && history.replaceState) history.replaceState(null, '', '#' + h);
+    else location.hash = h;
+  } catch (e) {}
+}
+window.addEventListener('hashchange', function(){
+  var r = readHash();
+  if (r.view === state.view && r.method === state.method && r.sec === state.sec) return;
+  var methodChanged = r.method !== state.method;
+  state.view = r.view; state.method = r.method; state.sec = r.sec;
+  if (methodChanged) state.hover = null;
+  render(methodChanged);
+});
+
+/* ---------- actions ---------- */
+function openMethod(id, sec){
+  if (!byId[id]) return;
+  var changed = state.method !== id || state.view !== 'map';
+  state.view = 'map'; state.method = id; state.sec = sec || 0; state.hover = null;
+  writeHash(false);
+  render(changed);
+  var top = el.vmap.getBoundingClientRect().top;
+  if (top < 0) window.scrollBy({top: top - 8, behavior: reduceMotion.matches ? 'auto' : 'smooth'});
+  var h2 = document.getElementById('p-title');
+  if (h2) { try { h2.focus({preventScroll:true}); } catch (e) {} }
+}
+function goHome(){
+  state.view = 'map'; state.method = null; state.sec = 0;
+  writeHash(false);
+  render(true);
+}
+function setSection(i){
+  var m = byId[state.method]; if (!m) return;
+  i = Math.max(0, Math.min(m.sections.length - 1, i));
+  state.sec = i;
+  writeHash(true);
+  el.nodes.querySelectorAll('[data-sec]').forEach(function(b){ b.setAttribute('aria-current', String(+b.dataset.sec === i)); });
+  var a = document.activeElement, inPanel = a && el.panel.contains(a);
+  var wasNext = inPanel && a.classList.contains('next'), wasAcc = inPanel && a.classList.contains('acc-btn');
+  renderPanel();
+  if (inPanel) {
+    var f = wasAcc ? el.panel.querySelector('.acc-btn[data-sec="' + i + '"]')
+          : wasNext ? (el.panel.querySelector('.sec-nav .next[data-sec]') || el.panel.querySelector('.sec-nav .btn'))
+          : el.panel.querySelector('.sec-nav .btn');
+    if (f) { try { f.focus({preventScroll:true}); } catch (e) {} }
+  }
+  if (state.all) {
+    var target = document.getElementById('sec-' + i);
+    if (target) {
+      target.scrollIntoView({block:'nearest', behavior: reduceMotion.matches ? 'auto' : 'smooth'});
+      target.classList.add('flash'); setTimeout(function(){ target.classList.remove('flash'); }, 1200);
+    }
+  }
+}
+function toggleFamily(f){
+  state.fam = state.fam === f ? null : f;
+  state.hover = null;
+  renderLegend(); applyDim(); renderPreview();
+}
+
+document.addEventListener('click', function(e){
+  var t = e.target.closest('[data-go],[data-sec],[data-family],[data-home],[data-clearfam]');
+  if (!t) return;
+  if (t.hasAttribute('data-go')) { openMethod(t.getAttribute('data-go'), 0); return; }
+  if (t.hasAttribute('data-sec')) { setSection(+t.getAttribute('data-sec')); return; }
+  if (t.hasAttribute('data-family')) { toggleFamily(t.getAttribute('data-family')); return; }
+  if (t.hasAttribute('data-clearfam')) { state.fam = null; renderLegend(); applyDim(); renderPreview(); return; }
+  if (t.hasAttribute('data-home')) { goHome(); return; }
+});
+document.addEventListener('change', function(e){
+  if (e.target && e.target.id === 'allsec') { state.all = e.target.checked; renderPanel(); }
+});
+document.addEventListener('keydown', function(e){
+  if (state.view !== 'map' || !state.method) return;
+  var tag = (e.target && e.target.tagName) || '';
+  if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+  if (e.key === 'Escape') { goHome(); }
+  else if (e.key === 'ArrowRight' && !state.all) { setSection(state.sec + 1); }
+  else if (e.key === 'ArrowLeft' && !state.all) { setSection(state.sec - 1); }
+});
+function hoverHandler(e){
+  if (state.method) return;
+  var b = e.target.closest && e.target.closest('.node[data-go]');
+  if (b && state.hover !== b.dataset.go) { state.hover = b.dataset.go; renderPreview(); }
+}
+el.nodes.addEventListener('pointerover', hoverHandler);
+el.nodes.addEventListener('focusin', hoverHandler);
+
+/* ---------- rendering ---------- */
+function render(animate){
+  el.sub.textContent = state.method
+    ? 'Click a section box to read it. Use “All methods” or Esc to go back.'
+    : 'Click a method box, then click a section box to read it.';
+  renderCrumbs();
+  renderLegend();
+  renderMap(animate);
+}
+
+function renderCrumbs(){
+  if (!state.method) { el.crumbs.hidden = true; el.crumbs.innerHTML = ''; return; }
+  var m = byId[state.method];
+  el.crumbs.hidden = false;
+  el.crumbs.innerHTML = '<button type="button" class="btn" data-home>← All methods</button>' +
+    '<span class="trail">Statistical Methods <span aria-hidden="true">›</span> <b>' + esc(m.name) + '</b></span>';
+}
+
+function renderLegend(){
+  if (state.method) { el.legend.hidden = true; return; }
+  el.legend.hidden = false;
+  el.legend.innerHTML = '<span class="lbl">Method families</span>' + FAMS.map(function(f){
+    var n = M.filter(function(m){ return m.fam === f.id; }).length;
+    return '<button type="button" class="chip f-' + f.id + '" data-family="' + f.id + '" aria-pressed="' + (state.fam === f.id) + '" title="' + esc(f.desc) + '"><span class="dot"></span>' + esc(f.name) + '<span class="n">' + n + '</span></button>';
+  }).join('') + (state.fam ? '<button type="button" class="chip clear" data-clearfam>Show all</button>' : '');
+}
+
+function renderMap(animate){
+  var W = el.wrap.clientWidth;
+  lastWidth = W;
+  if (!state.method) {
+    el.wrap.className = 'mapwrap';
+    el.panel.hidden = true;
+    var ok = W >= 640 && drawRadial('hub', animate);
+    if (!ok) drawTreeHub();
+    stageMode = ok ? 'radial' : 'tree';
+    el.preview.hidden = !ok;
+    renderPreview();
+  } else {
+    var split = W >= 1040;
+    el.wrap.className = 'mapwrap' + (split ? ' split' : '');
+    el.panel.hidden = false;
+    el.tree.hidden = true;
+    el.preview.hidden = true;
+    var stageW = split ? W - 420 : W;
+    var radial = stageW >= 560 && drawRadial('method', animate);
+    if (!radial) { el.stage.hidden = true; el.nodes.textContent = ''; el.svg.textContent = ''; stageItems = []; }
+    stageMode = radial ? 'radial' : 'tree';
+    renderPanel();
+  }
+  applyDim();
+}
+
+/* keeps hyphenated words such as "Chi-Square" on one line inside map boxes */
+function mk(tag, cls, text){
+  var e = document.createElement(tag); e.className = cls;
+  if (text != null) e.innerHTML = '<span>' + esc(text).replace(/(\S+-\S+)/g, '<span class="nw">$1</span>') + '</span>';
+  return e;
+}
+function svgEl(tag, attrs){ var e = document.createElementNS(SVGNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+function place(e, x, y, w, h){ e.style.translate = (x - w / 2).toFixed(1) + 'px ' + (y - h / 2).toFixed(1) + 'px'; }
+
+function drawRadial(kind, animate){
+  el.stage.hidden = false; el.tree.hidden = true;
+  el.nodes.textContent = ''; el.svg.textContent = '';
+  el.stage.style.height = '';
+  var W = el.stage.clientWidth, center, items;
+  if (kind === 'hub') {
+    /* widest node that still clears its neighbours at the top of the ring (pad 12, gap 8) */
+    var nw = Math.min(172, Math.floor((0.21685 * W - 13.2) / 1.21685) - 2);
+    if (nw < 106) return false;
+    el.stage.style.setProperty('--nw', nw + 'px');
+    el.stage.style.setProperty('--nfs', nw >= 140 ? '14.5px' : '13.5px');
+    center = mk('div', 'center hub', 'Statistical Methods');
+    items = M.map(function(m, k){
+      var b = mk('button', 'node f-' + m.fam, m.label);
+      b.type = 'button'; b.dataset.go = m.id; b.dataset.f = m.fam;
+      b.setAttribute('aria-label', m.name + ', ' + m.sections.length + ' sections');
+      return {el:b, fam:m.fam, angle:-90 - k * 360 / M.length};
+    });
+  } else {
+    var m = byId[state.method], n = m.sections.length;
+    el.stage.style.setProperty('--nw', (W >= 680 ? 142 : 128) + 'px');
+    el.stage.style.setProperty('--nfs', '14.5px');
+    center = mk('div', 'center mc f-' + m.fam, m.name);
+    center.style.setProperty('--cw', Math.round(Math.min(250, Math.max(180, W * 0.3))) + 'px');
+    items = m.sections.map(function(s, i){
+      var b = mk('button', 'node sec f-' + m.fam, s.t);
+      b.type = 'button'; b.dataset.sec = i; b.dataset.f = m.fam;
+      b.setAttribute('aria-current', String(i === state.sec));
+      return {el:b, fam:m.fam, angle:-90 + i * 360 / n};
+    });
+  }
+  el.nodes.appendChild(center);
+  items.forEach(function(it){ el.nodes.appendChild(it.el); });
+  var cw = center.offsetWidth, ch = center.offsetHeight;
+  var sizes = items.map(function(it){ return [it.el.offsetWidth, it.el.offsetHeight]; });
+  var L = solve(kind, W, sizes, cw, ch, items.map(function(it){ return it.angle; }));
+  if (!L) { el.nodes.textContent = ''; el.stage.hidden = true; return false; }
+
+  el.stage.style.height = L.H + 'px';
+  el.svg.setAttribute('width', W); el.svg.setAttribute('height', L.H);
+  el.svg.setAttribute('viewBox', '0 0 ' + W + ' ' + L.H);
+  var anim = animate && !reduceMotion.matches;
+  place(center, L.cx, L.cy, cw, ch);
+  if (anim) { center.classList.remove('pop'); void center.offsetWidth; center.classList.add('pop'); }
+
+  items.forEach(function(it, i){
+    var w = sizes[i][0], h = sizes[i][1], x = L.pos[i][0], y = L.pos[i][1];
+    it.x = x; it.y = y; it.w = w; it.h = h;
+    var dx = x - L.cx, dy = y - L.cy, d = Math.hypot(dx, dy) || 1, ux = dx / d, uy = dy / d;
+    var re = 1 / Math.sqrt(Math.pow(ux / (cw / 2), 2) + Math.pow(uy / (ch / 2), 2));
+    var tr = Math.min(Math.abs(ux) > 1e-6 ? (w / 2) / Math.abs(ux) : Infinity, Math.abs(uy) > 1e-6 ? (h / 2) / Math.abs(uy) : Infinity);
+    var x0 = L.cx + ux * (re + 6), y0 = L.cy + uy * (re + 6);
+    var tx = x - ux * (tr + 5), ty = y - uy * (tr + 5);
+    var bx = tx - ux * 10, by = ty - uy * 10, px = -uy, py = ux;
+    var line = svgEl('line', {x1:x0.toFixed(1), y1:y0.toFixed(1), x2:(bx + ux).toFixed(1), y2:(by + uy).toFixed(1), 'class':'ln f-' + it.fam, pathLength:'1'});
+    var ah = svgEl('polygon', {points: tx.toFixed(1) + ',' + ty.toFixed(1) + ' ' + (bx + px * 5).toFixed(1) + ',' + (by + py * 5).toFixed(1) + ' ' + (bx - px * 5).toFixed(1) + ',' + (by - py * 5).toFixed(1), 'class':'ah f-' + it.fam});
+    if (it.el.dataset.go) { line.dataset.f = it.fam; ah.dataset.f = it.fam; }
+    it.line = line; it.ah = ah;
+    el.svg.appendChild(line); el.svg.appendChild(ah);
+    if (anim) {
+      it.el.style.transition = 'none'; line.style.transition = 'none'; ah.style.transition = 'none';
+      place(it.el, L.cx, L.cy, w, h);
+      it.el.style.opacity = '0'; it.el.style.scale = '.4';
+      line.style.strokeDasharray = '1'; line.style.strokeDashoffset = '1'; ah.style.opacity = '0';
+    } else {
+      place(it.el, x, y, w, h);
+    }
+  });
+  stageItems = items;
+
+  if (anim) {
+    void el.nodes.offsetWidth;
+    requestAnimationFrame(function(){
+      items.forEach(function(it, i){
+        var delay = (i * 24) + 'ms';
+        it.el.style.transition = ''; it.el.style.transitionDelay = delay;
+        it.line.style.transition = ''; it.line.style.transitionDelay = delay;
+        it.ah.style.transition = ''; it.ah.style.transitionDelay = (i * 24 + 420) + 'ms';
+        place(it.el, it.x, it.y, it.w, it.h);
+        it.el.style.opacity = ''; it.el.style.scale = '';
+        it.line.style.strokeDashoffset = '0'; it.ah.style.opacity = '';
+      });
+      setTimeout(function(){
+        items.forEach(function(it){
+          it.el.style.transitionDelay = ''; it.line.style.transitionDelay = ''; it.ah.style.transitionDelay = '';
+          it.line.style.strokeDasharray = ''; it.line.style.strokeDashoffset = '';
+        });
+      }, 1300);
+    });
+  }
+  return true;
+}
+
+function solve(kind, W, sizes, cw, ch, angles){
+  var nw = Math.max.apply(null, sizes.map(function(s){ return s[0]; }));
+  var nh = Math.max.apply(null, sizes.map(function(s){ return s[1]; }));
+  var pad = 12;
+  var vh = window.innerHeight || 800;
+  var pref = kind === 'hub'
+    ? Math.min(W * 0.62, Math.max(480, vh - 290), 720)
+    : Math.min(Math.max(W * 0.72, 440), 600);
+  pref = Math.max(pref, ch + 2 * nh + 80);
+  var rx = W / 2 - nw / 2 - pad;
+  for (var H = Math.round(pref); H <= 1200; H += 8) {
+    var cx = W / 2, cy = H / 2, ry = H / 2 - nh / 2 - pad;
+    var pos = angles.map(function(a){ var r = a * Math.PI / 180; return [cx + rx * Math.cos(r), cy + ry * Math.sin(r)]; });
+    if (fits(pos, sizes, cx, cy, cw, ch)) return {H:H, cx:cx, cy:cy, pos:pos};
+  }
+  return null;
+}
+function fits(pos, sizes, cx, cy, cw, ch){
+  for (var i = 0; i < pos.length; i++) {
+    var xi = pos[i][0], yi = pos[i][1], wi = sizes[i][0], hi = sizes[i][1];
+    if (Math.abs(xi - cx) < (wi + cw) / 2 + 14 && Math.abs(yi - cy) < (hi + ch) / 2 + 14) return false;
+    for (var j = i + 1; j < pos.length; j++) {
+      if (Math.abs(xi - pos[j][0]) < (wi + sizes[j][0]) / 2 + 8 && Math.abs(yi - pos[j][1]) < (hi + sizes[j][1]) / 2 + 8) return false;
+    }
+  }
+  return true;
+}
+
+function drawTreeHub(){
+  el.stage.hidden = true; el.nodes.textContent = ''; el.svg.textContent = ''; stageItems = [];
+  el.tree.hidden = false;
+  el.tree.innerHTML = '<div class="t-root">Statistical Methods</div><div class="t-trunk">' + FAMS.map(function(f){
+    return '<div class="t-group f-' + f.id + '"><p class="t-label"><span class="dot"></span>' + esc(f.name) + '</p><div class="t-items">' +
+      M.filter(function(m){ return m.fam === f.id; }).map(function(m){
+        return '<button type="button" class="t-node" data-go="' + m.id + '" data-f="' + m.fam + '"><span>' + esc(m.label) + '</span><span class="t-meta">' + m.sections.length + ' sections</span></button>';
+      }).join('') + '</div></div>';
+  }).join('') + '</div>';
+}
+
+function applyDim(){
+  var f = state.method ? null : state.fam;
+  document.querySelectorAll('#nodes [data-go], #lines [data-f], #tree [data-go]').forEach(function(e){
+    e.classList.toggle('dim', !!f && e.getAttribute('data-f') !== f);
+  });
+}
+
+function renderPreview(){
+  if (state.method || el.preview.hidden) return;
+  var m = state.hover && byId[state.hover];
+  if (m) {
+    var f = famById[m.fam];
+    el.preview.className = 'preview f-' + m.fam;
+    el.preview.innerHTML = '<div class="pv-top"><span class="pill"><span class="dot"></span>' + esc(f.name) + '</span><span class="count">' + m.sections.length + ' sections</span></div>' +
+      '<p class="pv-name">' + esc(m.name) + '</p><p class="pv-text">' + esc(m.sections[0].b[0]) + '</p>';
+  } else if (state.fam) {
+    var fam = famById[state.fam], list = M.filter(function(x){ return x.fam === state.fam; });
+    el.preview.className = 'preview f-' + fam.id;
+    el.preview.innerHTML = '<div class="pv-top"><span class="pill"><span class="dot"></span>' + esc(fam.name) + '</span><span class="count">' + list.length + ' method' + (list.length > 1 ? 's' : '') + '</span></div>' +
+      '<p class="pv-text">' + esc(fam.desc) + ' On the map: ' + list.map(function(x){ return '<button type="button" class="mlink f-' + x.fam + '" data-go="' + x.id + '">' + esc(x.name) + '</button>'; }).join(', ') + '.</p>';
+  } else {
+    el.preview.className = 'preview';
+    el.preview.innerHTML = '<p class="pv-name">' + M.length + ' methods · ' + TOTAL_SECTIONS + ' sections</p>' +
+      '<p class="pv-text">Point at a method to preview its purpose here, then select it to open its sections. Colors group related methods into families; select a family above to highlight it.</p>';
+  }
+}
+
+function secHTML(m, j, withNav){
+  var s = m.sections[j];
+  return '<article class="sec" id="sec-' + j + '"><h3>' + esc(s.t) + '</h3>' + bulletsHTML(s) + (withNav ? navHTML(m, j) : '') + '</article>';
+}
+function navHTML(m, j){
+  var n = m.sections.length, nextM = M[(m.idx + 1) % M.length], h = '<div class="sec-nav">';
+  if (j > 0) h += '<button type="button" class="btn" data-sec="' + (j - 1) + '">← ' + esc(m.sections[j - 1].t) + '</button>';
+  if (j < n - 1) h += '<button type="button" class="btn next" data-sec="' + (j + 1) + '">Next: ' + esc(m.sections[j + 1].t) + ' →</button>';
+  else h += '<button type="button" class="btn next" data-go="' + nextM.id + '">Next method: ' + esc(nextM.name) + ' →</button>';
+  return h + '</div>';
+}
+
+function renderPanel(){
+  var m = byId[state.method]; if (!m) return;
+  var f = famById[m.fam], n = m.sections.length, i = state.sec;
+  var prevM = M[(m.idx - 1 + M.length) % M.length], nextM = M[(m.idx + 1) % M.length];
+  var desk = stageMode === 'radial';
+  var h = '<div class="p-top"><span class="pill"><span class="dot"></span>' + esc(f.name) + '</span><span class="count">Method ' + (m.idx + 1) + ' of ' + M.length + ' · ' + n + ' sections</span></div>' +
+    '<h2 id="p-title" tabindex="-1">' + esc(m.name) + '</h2>';
+  var toggle = '<label class="toggle"><input type="checkbox" id="allsec"' + (state.all ? ' checked' : '') + '> Show all sections</label>';
+  if (desk) {
+    h += '<div class="sec-head"><p class="eyebrow">' + (state.all ? 'All ' + n + ' sections' : 'Section ' + (i + 1) + ' of ' + n) + '</p>' + toggle + '</div>';
+    h += state.all ? m.sections.map(function(s, j){ return secHTML(m, j, false); }).join('') : secHTML(m, i, true);
+  } else {
+    h += '<div class="sec-head"><p class="eyebrow">Sections</p>' + toggle + '</div><div class="acc-tree">' +
+      m.sections.map(function(s, j){
+        var open = state.all || j === i;
+        return '<div class="acc' + (open ? ' open' : '') + '"><button type="button" class="acc-btn" data-sec="' + j + '" aria-expanded="' + open + '"><span>' + esc(s.t) + '</span><span class="chev" aria-hidden="true"></span></button>' +
+          (open ? '<div class="acc-body sec" id="sec-' + j + '">' + bulletsHTML(s) + (state.all ? '' : navHTML(m, j)) + '</div>' : '') + '</div>';
+      }).join('') + '</div>';
+  }
+  if (m.related && m.related.length) {
+    h += '<div class="related"><p class="eyebrow">Related on this map</p><div class="rel-list">' + m.related.map(function(r){
+      var x = byId[r[0]];
+      return '<button type="button" class="rel f-' + x.fam + '" data-go="' + x.id + '"><b>' + esc(x.name) + '</b><span>' + esc(r[1]) + '</span></button>';
+    }).join('') + '</div></div>';
+  }
+  h += '<nav class="mnav" aria-label="Other methods"><button type="button" data-go="' + prevM.id + '"><small>Previous method</small><span>← ' + esc(prevM.name) + '</span></button>' +
+    '<button type="button" class="r" data-go="' + nextM.id + '"><small>Next method</small><span>' + esc(nextM.name) + ' →</span></button></nav>';
+  el.panel.className = 'panel f-' + m.fam;
+  el.panel.innerHTML = h;
+}
+
+function renderOutline(){
+  var h = '<h1>Statistical Methods</h1>';
+  M.forEach(function(m){
+    h += '<h2>' + esc(m.name) + '</h2>';
+    m.sections.forEach(function(s){ h += '<h3>' + esc(s.t) + '</h3><ul>' + s.b.map(function(b){ return '<li>' + esc(b) + '</li>'; }).join('') + '</ul>'; });
+  });
+  el.outline.innerHTML = h;
+}
+
+/* ---------- start ---------- */
+var start = readHash();
+state.view = start.view; state.method = start.method; state.sec = start.sec;
+renderOutline();
+render(false);
+
+var rafId = 0;
+function onResize(){
+  cancelAnimationFrame(rafId);
+  rafId = requestAnimationFrame(function(){
+    if (state.view !== 'map') return;
+    var W = el.wrap.clientWidth;
+    if (Math.abs(W - lastWidth) > 2) render(false);
+  });
+}
+if (window.ResizeObserver) new ResizeObserver(onResize).observe(el.wrap);
+else window.addEventListener('resize', onResize);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(function(){ if (state.view === 'map') render(false); });
+}
+})();
+</script>
+</body>
+</html>
